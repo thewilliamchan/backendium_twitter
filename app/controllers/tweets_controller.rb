@@ -43,10 +43,10 @@ class TweetsController < ApplicationController
 
   def index_by_user
     user = User.find_by(username: params[:username])
-    tweet = Tweet.find_by(user_id: user.id)
+    tweets = Tweet.find_by(user_id: user.id)
 
-    if tweet
-      tweet.each do |tweet|
+    if tweets
+      tweets.each do |tweet|
         render json: {
           tweet: {
             message: tweet.message
@@ -55,13 +55,26 @@ class TweetsController < ApplicationController
       end
     else
       render json: {
-        tweets: []
+        tweet: []
       }
     end
   end
 
   def search
+    tweets = Tweet.fuzzy_search(message: params[:keyword])
 
+    if tweets
+      tweets.each do |tweet|
+        render json: {
+          tweet: {
+            message: tweet.message
+          }
+        }
+      end
+    else
+      render json: {
+        tweet: []
+      }
   end
 
   private
