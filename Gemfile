@@ -30,6 +30,8 @@ gem 'bcrypt', '~> 3.1.7'
 
 gem 'textacular', '~> 5.0'
 
+gem 'pg', '~> 0.21'
+
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platform: :mri
@@ -41,12 +43,14 @@ group :development, :test do
   gem 'rspec-rails', "~> 3.0"
 
   # Use sqlite3 as the database for Active Record
-  gem 'sqlite3'
+  # gem 'sqlite3'
+  # gem 'pg', '~> 0.21'
 end
 
 group :production do
   # Use pg as the database for Active Record
   # gem 'pg', '~> 0.10'
+  # gem 'pg', '~> 0.21'
 end
 
 group :development do
