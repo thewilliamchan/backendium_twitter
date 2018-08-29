@@ -75,6 +75,7 @@ class TweetsController < ApplicationController
       render json: {
         tweet: []
       }
+    end
   end
 
   private
