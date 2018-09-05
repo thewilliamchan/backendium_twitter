@@ -68,16 +68,10 @@ class TweetsController < ApplicationController
   end
 
   def search
-    tweets = Tweet.fuzzy_search(message: params[:keyword])
+    @tweets_by_search = Tweet.fuzzy_search(message: params[:keyword]).order(created_at: :desc)
 
-    if tweets
-      tweets.each do |tweet|
-        render json: {
-          tweet: {
-            message: tweet.message
-          }
-        }
-      end
+    if @tweets_by_search
+      render 'tweets/search'
     else
       render json: {
         tweet: []
