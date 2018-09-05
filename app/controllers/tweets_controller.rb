@@ -57,15 +57,9 @@ class TweetsController < ApplicationController
 
   def index_by_user
     user = User.find_by(username: params[:username])
-    tweets = Tweet.where(user_id: user.id)
-    if tweets
-      tweets.each do |tweet|
-        render json: {
-          tweet: {
-            message: tweet.message
-          }
-        }
-      end
+    @tweets_by_user = Tweet.where(user_id: user.id).order(created_at: :desc)
+    if @tweets_by_user
+      render 'tweets/index_by_user'
     else
       render json: {
         tweet: []
