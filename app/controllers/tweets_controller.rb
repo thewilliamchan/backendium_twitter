@@ -1,6 +1,6 @@
 class TweetsController < ApplicationController
   def create
-    token = cookies.signed[:session_token]
+    token = cookies.signed[:twitter_session_token]
     session = Session.find_by(token: token)
 
     if session
@@ -10,6 +10,7 @@ class TweetsController < ApplicationController
       if tweet.save
         render json: {
           tweet: {
+            username: user.username,
             message: tweet.message
           }
         }
@@ -26,7 +27,7 @@ class TweetsController < ApplicationController
   end
 
   def destroy
-    token = cookies.signed[:session_token]
+    token = cookies.signed[:twitter_session_token]
     session = Session.find_by(token: token)
 
     if session
@@ -43,8 +44,7 @@ class TweetsController < ApplicationController
 
   def index_by_user
     user = User.find_by(username: params[:username])
-    tweets = Tweet.find_by(user_id: user.id)
-
+    tweets = Tweet.where(user_id: user.id)
     if tweets
       tweets.each do |tweet|
         render json: {
