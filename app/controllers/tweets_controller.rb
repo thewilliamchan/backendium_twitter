@@ -42,6 +42,11 @@ class TweetsController < ApplicationController
     end
   end
 
+  def index
+    @tweets = Tweet.all.order(created_at: :desc)
+    render 'tweets/index'
+  end
+
   def index_by_user
     user = User.find_by(username: params[:username])
     tweets = Tweet.where(user_id: user.id)
