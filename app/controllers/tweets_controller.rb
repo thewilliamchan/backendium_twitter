@@ -38,7 +38,15 @@ class TweetsController < ApplicationController
         render json: {
           success: true
         }
+      else
+        render json: {
+          success: false
+        }
       end
+    else
+      render json: {
+        success: false
+      }
     end
   end
 
